@@ -6,19 +6,20 @@ import { Profile } from "./pages/Profile";
 import { SignIn } from "./pages/Signin";
 import { SignUp } from "./pages/SignUp";
 import { Header } from "./Components/Header";
+import { PrivateRoute } from "./Components/PrivateRoute";
 
 export const App = () => {
   return (
     <BrowserRouter>
-    <Header/>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/About" element={<About />} />
         <Route path="/Signin" element={<SignIn />} />
         <Route path="/SignUp" element={<SignUp />} />
-        <Route path="/Profile" element={<Profile />} />
-
-        <Route></Route>
+        <Route element={<PrivateRoute />}>
+          <Route path="/Profile" element={<Profile />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
