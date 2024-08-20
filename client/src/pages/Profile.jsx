@@ -12,6 +12,9 @@ import {
   DeleteUserFailure,
   deleteUserStart,
   DeleteUserSuccess,
+  SignOutUserFailure,
+  SignOutUserStart,
+  SignOutUserSuccess,
   updateUserFailure,
   updateUserStart,
   updateUserSuccess,
@@ -26,8 +29,6 @@ export const Profile = () => {
   const [updateSuccess, setUpdateSuccess] = useState(false)
   const { currentUser, loading , error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  console.log(filePerc);
   //fire base storage
   // allow read;
   // allow write: if
@@ -37,6 +38,7 @@ export const Profile = () => {
   useEffect(() => {
     if (file) {
       handleFile(file);
+
     }
   }, [file]);
 
@@ -108,6 +110,22 @@ export const Profile = () => {
   } catch (error) {
     dispatch(DeleteUserFailure(error.message))
   }
+ };
+
+
+ const handleSignOut = async () =>{
+    try {
+      dispatch(SignOutUserStart())
+      const response = await fetch(`/api/auth/signout`);
+      const data = await response.json();
+      if(data.success === false){
+        dispatch(SignOutUserFailure(data.message))
+        return;
+      }
+       dispatch(SignOutUserSuccess(data));
+    } catch (error) {
+      dispatch(SignOutUserFailure())
+    }
  }
 
   return (
@@ -169,7 +187,7 @@ export const Profile = () => {
       </form>
       <div className="flex justify-between mt-5">
         <span onClick={handleDelete} className="text-red-700 cursor-pointer">Delete Account </span>
-        <span className="text-red-700 cursor-pointer">Sign out </span>
+        <span onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign out </span>
       </div>
       {error && <p className="text-red-500">{error}</p>}
       <p className="text-green-700 mt-5">{updateSuccess ?"User is updated successfully":''}</p>
