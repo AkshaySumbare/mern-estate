@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.use("/test", Controller.test);
 router.post('/update/:id', verifyToken, Controller.updateUser)
+router.delete('/delete/:id', verifyToken, Controller.deleteUser)
 
 module.exports = router;
