@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 const userRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
+const listingRouter = require('./routes/listing.route')
 const cookieParser = require("cookie-parser");
 
 mongoose
@@ -25,6 +26,8 @@ app.listen(PORT, () => {
 
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/listing", listingRouter);
+
 
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
