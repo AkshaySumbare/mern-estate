@@ -5,5 +5,6 @@ const listController = require("../controllers/listing.controller");
 
 router.post("/create",verifyToken, listController.createListing);
 router.delete("/delete/:id",verifyToken, listController.deleteListing);
+router.post("/update/:id",verifyToken, listController.updateListing);
 
 module.exports = router;
