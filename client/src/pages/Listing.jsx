@@ -6,6 +6,7 @@ import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import {FaBath, FaBed , FaChair, FaParking, FaShare , FaMapMarkerAlt} from 'react-icons/fa'
+import { Contact } from "../Components/Contact";
 
 export const Listing = () => {
   SwiperCore.use([Navigation]);
