@@ -66,5 +66,5 @@ import React from "react";
         </h1>
       </div>
     </div>
-  );
+  )
 };
