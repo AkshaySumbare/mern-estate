@@ -13,6 +13,10 @@ export const Search = () => {
     order: "desc",
   });
 
+  const [loading, setLoading] = useState(false);
+  const [listings, setListings] = useState([]);
+  console.log(listings)
+
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
@@ -42,6 +46,18 @@ export const Search = () => {
         order: orderFromUrl || "desc",
       });
     }
+     
+     const fetchListing = async () =>{
+        setLoading(true);
+        const searchQuery = urlParams.toString();
+        const response = await fetch(`/api/listing/get?${searchQuery}`);
+        const data = await response.json();
+        setListings(data);
+        setLoading(false);
+
+     }
+     fetchListing();
+
   }, [location.search]);
 
   const handleChange = (e) => {
