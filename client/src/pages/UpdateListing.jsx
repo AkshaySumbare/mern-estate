@@ -87,7 +87,7 @@ export const UpdateListing = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload progress is ${progress}% done`);
+          
         },
         (error) => {
           reject(error);

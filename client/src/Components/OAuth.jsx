@@ -26,7 +26,7 @@ export const OAuth = () => {
       });
       const data = await response.json();
       dispatch(signInSuccess(data));
-      console.log(data);
+  
       navigate("/");
     } catch (error) {
       console.log(error);

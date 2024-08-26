@@ -31,8 +31,7 @@ export const CreateListing = () => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  console.log(formData);
-  console.log(formData.imageUrls.length);
+
 
   const handleImageSubmit = (e) => {
     setUploading(true);
@@ -73,7 +72,7 @@ export const CreateListing = () => {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload progress is ${progress}% done`);
+          
         },
         (error) => {
           reject(error);
