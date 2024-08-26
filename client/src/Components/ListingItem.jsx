@@ -6,7 +6,7 @@ export const ListingItem =({ listings }) => {
     
      listings.map((listing)=>{
       return(
-     <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
+     <div key={listing._id} className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
        <Link to={`/listing/${listing._id}`}>
         <img
           src={
@@ -30,7 +30,7 @@ export const ListingItem =({ listings }) => {
             {listing.description}
           </p>
           <p className='text-slate-500 mt-2 font-semibold '>
-            $
+          ₹
             {listing.offer
               ? listing.discountPrice.toLocaleString('en-US')
               : listing.regularPrice.toLocaleString('en-US')}

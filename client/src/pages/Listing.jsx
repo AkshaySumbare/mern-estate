@@ -57,7 +57,9 @@ export const Listing = () => {
                       background: `url(${url}) center no-repeat`,
                        backgroundSize: "cover",
                     }}
-                  ></div>
+                  >
+                   
+                  </div>
                 </SwiperSlide>
               );
             })}
