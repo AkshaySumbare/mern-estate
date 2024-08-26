@@ -16,7 +16,7 @@ export const Search = () => {
 
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
-  console.log(listings)
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -47,18 +47,22 @@ export const Search = () => {
         order: orderFromUrl || "desc",
       });
     }
-     
-     const fetchListing = async () =>{
-        setLoading(true);
-        const searchQuery = urlParams.toString();
-        const response = await fetch(`/api/listing/get?${searchQuery}`);
-        const data = await response.json();
-        setListings(data);
-        setLoading(false);
 
-     }
-     fetchListing();
-
+    const fetchListing = async () => {
+      setLoading(true);
+      setShow(false);
+      const searchQuery = urlParams.toString();
+      const response = await fetch(`/api/listing/get?${searchQuery}`);
+      const data = await response.json();
+      if (data.length > 8) {
+        setShow(true);
+      } else {
+        setShow(false);
+      }
+      setListings(data);
+      setLoading(false);
+    };
+    fetchListing();
   }, [location.search]);
 
   const handleChange = (e) => {
@@ -103,6 +107,20 @@ export const Search = () => {
     urlParams.set("order", sidebardata.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParms = new URLSearchParams(location.search);
+    urlParms.set("startIndex", startIndex);
+    const searchQuery = urlParms.toString();
+    const response = await fetch(`/api/listing/get?${searchQuery}`);
+    const data = await response.json();
+    if (data.length < 9) {
+      setShow(false);
+    }
+    setListings([...listings, ...data]);
   };
 
   return (
@@ -212,19 +230,21 @@ export const Search = () => {
           Listing results:
         </h1>
         <div className="p-7 flex flex-wrap gap-4">
-          { listings.length === 0 && !loading &&(
+          {listings.length === 0 && !loading && (
             <p className="text-xl text-slate-700">No listing found</p>
           )}
-          {
-            loading && (
-              <p className=" text-xl text-slate-700 text-center">Loading...</p>
-            )
-          }
-          {
-            !loading && listings && (
-              <ListingItem listings={listings}/>
-            )
-          }
+          {loading && (
+            <p className=" text-xl text-slate-700 text-center">Loading...</p>
+          )}
+          {!loading && listings && <ListingItem listings={listings} />}
+          {show && (
+            <button
+              onClick={onShowMoreClick}
+              className="text-green-700 hover:underline p-7 text-center w-full"
+            >
+              Show more
+            </button>
+          )}
         </div>
       </div>
     </div>
